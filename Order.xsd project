@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.bol.com/Order" xmlns:tns="http://www.bol.com/Order" elementFormDefault="qualified">
+	
+	<element name="Order" type="tns:Order"/>
+		
+	<!--Each order requires a customer and product
+		Each order will be associated with an id.-->		
+	<complexType name="Order">
+		<sequence>
+			<element name="Customer" type="tns:Customer"/>
+			<element name="Product" type="tns:Product" minOccurs="1" maxOccurs="unbounded"/>
+		</sequence>
+		<attribute name="id" type="tns:id"/>
+	</complexType>
+	
+	<!-- Each customer will have a name, and phone number.
+		 Phone number is not required.
+		 Each customer will be associated with an id -->
+	<complexType name="Customer">
+		<sequence>
+			<element name="name" type="string"/>
+			<element name="phone" type="string" minOccurs="0"/>
+		</sequence>
+		<attribute name="id" type="tns:id"/>
+	</complexType>
+	
+	<!-- Each product will include a name, description, price, and category.
+		 Each product will also be associated with an id. -->
+	<complexType name="Product">
+		<sequence>
+			<element name="name" type="tns:String20Chars"/>
+			<element name="description" type="tns:String100Chars"/>
+			<element name="price" type="int"/>
+			<element name="category" type="string"/>
+		</sequence>
+		<attribute name="id" type="tns:id"/>
+	</complexType>
+
+	<!-- The id only contains integers up to 50 numbers.-->
+	<simpleType name="id">
+		<restriction base="int">
+			<maxInclusive value="50"/>
+		</restriction>
+	</simpleType>
+	
+	<!-- Some elements can only have up to 20 characters in its string. -->
+	<simpleType name="String20Chars">
+		<restriction base="string">
+			<maxLength value="20"/>
+		</restriction>
+	</simpleType>
+
+	<!-- Some elements can only have up to 100 characters in its string. -->
+	<simpleType name="String100Chars">
+		<restriction base="string">
+			<maxLength value="100"/>
+		</restriction>
+	</simpleType>
+	
+	<!-- There are only three options available for the category (electronics, books, shoes) -->
+	<simpleType name="category">
+		<restriction base="string">
+			<enumeration value="electronics"/>
+			<enumeration value="books"/>
+			<enumeration value="shoes"/>
+		</restriction>
+	</simpleType>
+
+
+</schema>
